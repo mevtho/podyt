@@ -1,0 +1,26 @@
+{
+    "name": "ytpod/podcastfeed",
+    "description": "From torann/podcastfeed",
+    "keywords": ["laravel", "podcast", "podcast generator", "rss", "xml", "feed"],
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Daniel Stainback",
+            "email": "daniel@lyften.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.1",
+        "illuminate/support": "~8.75"
+    },
+    "autoload": {
+        "psr-4": {
+            "Torann\\PodcastFeed\\": "src/Torann/PodcastFeed/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.2-dev"
+        }
+    }
+}

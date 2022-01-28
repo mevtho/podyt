@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -41,4 +42,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function(self $user) {
+            event(new Registered($user));
+        });
+    }
+
+    public function feeds()
+    {
+        return $this->hasMany(Feed::class);
+    }
 }

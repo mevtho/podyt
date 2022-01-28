@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\EpisodeAdded;
+use App\Listeners\StartProcessEpisodeVideoSourceToMp3;
+use App\Listeners\SetUpUserDefaultFeed;
+use App\Listeners\UpdateEpisodeDataFromYoutubeApi;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +21,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            SetUpUserDefaultFeed::class
+        ],
+        EpisodeAdded::class => [
+            UpdateEpisodeDataFromYoutubeApi::class,
+            StartProcessEpisodeVideoSourceToMp3::class
         ],
     ];
 
