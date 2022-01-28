@@ -1,5 +1,5 @@
 {
-    "name": "ytpod/podcastfeed",
+    "name": "podyt/podcastfeed",
     "description": "From torann/podcastfeed",
     "keywords": ["laravel", "podcast", "podcast generator", "rss", "xml", "feed"],
     "license": "BSD-2-Clause",

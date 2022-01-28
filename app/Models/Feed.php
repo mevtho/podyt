@@ -4,11 +4,9 @@ namespace App\Models;
 
 use App\Traits\HasSlug;
 use App\Traits\HasUuid;
-use http\Url;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Storage;
 
 class Feed extends Model

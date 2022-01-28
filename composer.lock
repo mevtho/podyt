@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c24da42a380e86e97085bc503034382",
+    "content-hash": "b0430dc0d87fba806d6f43f8c4ffe2af",
     "packages": [
         {
             "name": "alaouy/youtube",
@@ -5704,7 +5704,7 @@
             "time": "2021-03-09T10:59:23+00:00"
         },
         {
-            "name": "podyt/podcastfeed",
+            "name": "ytpod/podcastfeed",
             "version": "dev-master",
             "dist": {
                 "type": "path",
