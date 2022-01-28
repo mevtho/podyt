@@ -8,11 +8,13 @@
         "alaouy/youtube": "^2.2",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "inertiajs/inertia-laravel": "^0.4.5",
         "laravel/framework": "^8.75",
-        "laravel/sanctum": "^2.11",
+        "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.5",
+        "podyt/podcastfeed": "*",
         "socialiteproviders/youtube": "^4.1",
-        "podyt/podcastfeed": "*"
+        "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
