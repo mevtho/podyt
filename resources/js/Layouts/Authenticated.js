@@ -6,7 +6,7 @@ export default function Authenticated({ header, children }) {
     const auth = usePage().props.auth;
 
     return (
-        <div className="min-h-screen text-sm">
+        <div className="bg-primary-50 min-h-screen text-sm">
             <div className="bg-primary-600 border-b-8 border-secondary-500 pb-32">
                 <Navigation auth={auth} />
 

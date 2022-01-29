@@ -18,6 +18,9 @@ class DownloadEpisodeController extends Controller
         abort_if($episode->feed_id !== $feedId, 404);
         abort_unless($episode->readyForDownload(), 404);
 
+        $episode->mp3_access_count++;
+        $episode->save();
+
         return Response::file(
             Storage::disk('download')->path($episode->mp3_location)
         );

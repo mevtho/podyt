@@ -108,6 +108,7 @@ class Feed extends Model
 
     public function syncSources($sources)
     {
+        $this->sources()->delete();
         $this->sources()->saveMany(collect($sources)->map(function ($url) {
             $parts = parse_url($url);
             parse_str($parts['query'], $query);

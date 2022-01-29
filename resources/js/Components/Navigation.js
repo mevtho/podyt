@@ -14,9 +14,9 @@ export default function Navigation({auth}) {
             <div className="flex justify-between h-16">
                 <div className="px-2 flex items-center lg:px-0">
                     <div className="flex-shrink-0 flex items-center">
-                        <Link href="/">
+                        <a href="/">
                             <ApplicationLogo className="block h-9 w-auto text-primary-500"/>
-                        </Link>
+                        </a>
                     </div>
 
                     <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">

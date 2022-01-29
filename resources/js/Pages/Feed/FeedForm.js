@@ -102,13 +102,12 @@ export default function FeedForm({feed = null}) {
                                             className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-primary-300 text-sm font-medium rounded-r-md text-primary-700 bg-primary-50 hover:bg-primary-100 focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500"
                                         >
                                             <TrashIcon className="h-5 w-5 text-primary-400" aria-hidden="true"/>
-                                            <span>Remove</span>
+                                            <span className="sr-only">Remove</span>
                                         </button>
                                     </div>
                                     {renderError("sources." + idx)}
                                 </li>
-                            ))
-                            }
+                            ))}
                         </ul>
                     </div>
                     <div>
