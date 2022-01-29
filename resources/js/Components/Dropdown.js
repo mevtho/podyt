@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
-import { Link } from '@inertiajs/inertia-react';
-import { Transition } from '@headlessui/react';
+import React, {useContext, useState} from 'react';
+import {Link} from '@inertiajs/inertia-react';
+import {Transition} from '@headlessui/react';
 
 const DropDownContext = React.createContext();
 
@@ -30,7 +30,7 @@ const Trigger = ({ children }) => {
     );
 };
 
-const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }) => {
+const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-primary-600 border border-primary-400', children }) => {
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -79,7 +79,7 @@ const DropdownLink = ({ href, method = 'post', as = 'a', children }) => {
             href={href}
             method={method}
             as={as}
-            className="block w-full px-4 py-2 text-left text-sm leading-5 text-primary-700 hover:bg-primary-100 focus:outline-none focus:bg-primary-100 transition duration-150 ease-in-out"
+            className="block w-full px-4 py-2 text-left text-sm leading-5 text-white bg-primary-600 hover:bg-primary-400 focus:outline-none focus:bg-primary-400 transition duration-150 ease-in-out"
         >
             {children}
         </Link>

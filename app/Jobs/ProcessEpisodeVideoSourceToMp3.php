@@ -18,8 +18,6 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
 
     public Episode $episode;
 
-    public $queue = "downloads";
-
     /**
      * Create a new job instance.
      *
@@ -28,6 +26,7 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
     public function __construct(Episode $episode)
     {
         $this->episode = $episode->withoutRelations();
+        $this->queue = "downloads";
     }
 
     /**

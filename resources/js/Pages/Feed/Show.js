@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Head, Link} from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/Authenticated";
-import {CalendarIcon} from "@heroicons/react/outline";
+import {CalendarIcon, CogIcon} from "@heroicons/react/outline";
 import {format, parseISO} from "date-fns";
 import {Inertia} from "@inertiajs/inertia";
 import classNames from "@/Helpers/classNames";
@@ -20,9 +20,9 @@ export default function Show({feed}) {
             (c, episode) => Math.min(c, statusToRefreshRate[episode.status] || statusToRefreshRate.default),
             statusToRefreshRate.default
         );
-        console.log('Refrshing in ' + interval + 'seconds');
+
         const timeoutId = setTimeout(() => {
-            Inertia.get(route('feed.show', {feed}));
+            Inertia.get(route('feed.show', {feed}), {}, { preserveScroll: true});
         }, interval * 1000);
 
         return () => clearTimeout(timeoutId)
@@ -49,10 +49,21 @@ export default function Show({feed}) {
                             className="mx-auto h-48 w-48 border border-primary-300 bg-white text-primary-300"/>
                     </div>
                     <div className="flex flex-col w-full">
-                        <h2 className="text-3xl font-bold">{feed.title}</h2>
-                        <p className="mt-1 flex-grow">
-                            {feed.description}
-                        </p>
+                        <div className="flex-grow flex justify-between">
+                            <p>
+                                {feed.description}
+                            </p>
+                            <p className="flex-shrink-0">
+                                <Link className="text-secondary-500 hover:opacity-75 focus:opacity-75" href={route('feed.edit', {feed})}>
+                                    <CogIcon className="w-8 h-8" />
+                                </Link>
+                            </p>
+                        </div>
+                        {
+                            feed.sources && <ul>
+                                {feed.sources.map(source => <li key={source.feed_id}>{source.type_id}</li>)}
+                            </ul>
+                        }
                         <div className="mt-6 max-w-xl">
                             <label htmlFor="feed_url" className="block text-sm font-medium text-primary-700">
                                 Podcast Feed URL

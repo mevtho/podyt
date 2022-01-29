@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\FeedStoreRequest;
+use App\Http\Requests\FeedSaveRequest;
 use App\Http\Requests\FeedUpdateRequest;
 use App\Models\Feed;
 use Illuminate\Http\Request;
@@ -43,10 +43,10 @@ class FeedController extends Controller
     }
 
     /**
-     * @param \App\Http\Requests\FeedStoreRequest $request
+     * @param \App\Http\Requests\FeedSaveRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(FeedStoreRequest $request)
+    public function store(FeedSaveRequest $request)
     {
         $feed = new Feed($request->only('title'));
         if ($request->hasFile('cover_photo')) {
@@ -86,21 +86,36 @@ class FeedController extends Controller
      */
     public function edit(Request $request, Feed $feed)
     {
-        return view('feed.edit', compact('feed'));
+        $feed->load('sources');
+
+        return Inertia(
+            'Feed/Edit',
+            [
+                'feed' => $feed
+            ]
+        );
     }
 
     /**
-     * @param \App\Http\Requests\FeedUpdateRequest $request
+     * @param \App\Http\Requests\FeedSaveRequest $request
      * @param \App\Models\Feed $feed
      * @return \Illuminate\Http\Response
      */
-    public function update(FeedUpdateRequest $request, Feed $feed)
+    public function update(FeedSaveRequest $request, Feed $feed)
     {
-        $feed->update($request->validated());
+        $feed->title = $request->input('title');
+        if ($request->hasFile('cover_photo')) {
+            $feed->cover_photo_path = $request->file('cover_photo')->storePublicly('covers', 'public');
+        }
+        $feed->save();
 
         $request->session()->flash('feed.id', $feed->id);
 
-        return redirect()->route('feed.index');
+        $feed->syncSources(collect($request->input('sources', [])));
+
+        $request->session()->flash('feed.id', $feed->id);
+
+        return redirect()->route('feed.show', $feed);
     }
 
     /**

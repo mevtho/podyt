@@ -18,7 +18,7 @@ class CreateEpisodesTable extends Migration
         Schema::create('episodes', function (Blueprint $table) {
             $table->id();
             $table->string('uuid', 36);
-            $table->foreignId('feed_id')->constrained();
+            $table->foreignId('feed_id')->constrained()->cascadeOnDelete();
             $table->string('title', 400);
             $table->string('slug', 400);
             $table->string('source_url', 400);
