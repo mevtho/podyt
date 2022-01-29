@@ -7,6 +7,7 @@ import ValidationErrors from '@/Components/ValidationErrors';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 
 export default function Register() {
+    console.log(route('register'))
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
