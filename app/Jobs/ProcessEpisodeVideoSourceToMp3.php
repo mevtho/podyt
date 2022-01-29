@@ -18,6 +18,8 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
 
     public Episode $episode;
 
+    public $queue = "downloads";
+
     /**
      * Create a new job instance.
      *
