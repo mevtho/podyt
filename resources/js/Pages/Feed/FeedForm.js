@@ -3,7 +3,7 @@ import {Link, useForm} from "@inertiajs/inertia-react";
 import {PlusCircleIcon, TrashIcon} from "@heroicons/react/outline";
 
 export default function FeedForm({feed = null}) {
-    const {data, setData, post, put,  errors, progress} = useForm(Object.assign({
+    const {data, setData, post, errors, progress} = useForm(Object.assign({
             title: "",
             cover_photo: null,
             sources: []
@@ -17,7 +17,7 @@ export default function FeedForm({feed = null}) {
 
     function handleSubmitFeed(e) {
         e.preventDefault();
-console.log(data);
+
         if (feed) {
             post(route("feed.update", {feed}), data);
         } else {
@@ -114,11 +114,11 @@ console.log(data);
                     <div>
                         <button type="button"
                                 onClick={addNewSource}
-                                className="group inline-flex items-center text-sm font-medium rounded text-primary-700  hover:ring-2 hover:ring-offset-2 hover:ring-primary-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                                className="group inline-flex items-center text-sm font-medium rounded text-primary-700 focus:outline-none hover:underline focus:underline"
                         >
                             <PlusCircleIcon
                                 className="h-6 w-6 group-hover:text-white group-hover:bg-primary-700 rounded-full"/>
-                            Add Source
+                            <span className="ml-1">Add Source</span>
                         </button>
                     </div>
                 </div>

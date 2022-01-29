@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', \App\Http\Controllers\WelcomeController::class);
 
-Route::get('/f/{feed:externalid}', \App\Http\Controllers\RssFeedController::class)->name('feed.rss');
+Route::get('/f/{externalFeed}', \App\Http\Controllers\RssFeedController::class)->name('feed.rss');
 Route::get('/e/{episode:slug}.mp3', \App\Http\Controllers\DownloadEpisodeController::class)->name('feed.episode.mp3url');
 
 Route::middleware(['auth'])->group(function () {

@@ -16,19 +16,19 @@ class RssFeedController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(Request $request, User $user, Feed $feed)
+    public function __invoke(Request $request, Feed $feed)
     {
-        $feed->load(['episodes' => fn($query) => $query->published()->orderBy('created_at', 'asc')]);
+        $feed->load(['user', 'episodes' => fn($query) => $query->published()->orderBy('created_at', 'asc')]);
 
         PodcastFeed::setHeader([
             'title'       => $feed->title,
             'subtitle'    => '',
             'description' => $feed->description,
             'link'        => config('app.url'),
-            'image'       => $feed->coverUrl(),
-            'author'      => $user->name,
-            'owner'       => $user->name,
-            'email'       => $user->email,
+            'image'       => $feed->coverUrl,
+            'author'      => $feed->user->name,
+            'owner'       => $feed->user->name,
+            'email'       => $feed->user->email,
             'category'    => '',
             'language'    => 'en-us',
             'copyright'   => '',
