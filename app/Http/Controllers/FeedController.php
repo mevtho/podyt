@@ -69,7 +69,7 @@ class FeedController extends Controller
      */
     public function show(Request $request, Feed $feed)
     {
-        $feed->load(['episodes' => fn($query) => $query->orderBy('created_At', 'desc')]);
+        $feed->load(['sources', 'episodes' => fn($query) => $query->orderBy('created_At', 'desc')]);
 
         return Inertia(
             'Feed/Show',
