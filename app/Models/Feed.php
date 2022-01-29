@@ -89,7 +89,7 @@ class Feed extends Model
     public function getRssUrlAttribute()
     {
         if ($this->available) {
-            return route('feed.rss', $this);
+            return route('feed.rss', ["externalFeed" => $this->externalid]);
         } else {
             return '';
         }
