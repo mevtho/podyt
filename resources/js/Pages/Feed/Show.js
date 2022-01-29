@@ -12,7 +12,7 @@ export default function Show({feed}) {
     const statusToRefreshRate = {
         pending: 15,
         processing: 30,
-        default: feed.sources.length ? 30 : 120
+        default: (feed.sources?.length > 0 ) ? 30 : 120
     }
 
     useEffect(() => {
