@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Feed;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Torann\PodcastFeed\Facades\PodcastFeed;
+
+class RssFeedController extends Controller
+{
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function __invoke(Request $request, User $user, Feed $feed)
+    {
+        $feed->load(['episodes' => fn($query) => $query->published()->orderBy('created_at', 'asc')]);
+
+        PodcastFeed::setHeader([
+            'title'       => $feed->title,
+            'subtitle'    => '',
+            'description' => $feed->description,
+            'link'        => config('app.url'),
+            'image'       => $feed->coverUrl(),
+            'author'      => $user->name,
+            'owner'       => $user->name,
+            'email'       => $user->email,
+            'category'    => '',
+            'language'    => 'en-us',
+            'copyright'   => '',
+        ]);
+
+        foreach($feed->episodes as $episode)
+        {
+            PodcastFeed::addMedia([
+                'title'       => $episode->title,
+                'description' => $episode->title,
+                'publish_at'  => $episode->created_at->format(\DateTime::RSS),
+                'guid'        => $episode->uuid,
+                'url'         => $episode->episodeFileUrl(),
+                'type'        => 'mp3',//$episode->media_content_type,
+                'duration'    => $episode->duration,
+                'image'       => $episode->picture_url,
+            ]);
+        }
+
+        return Response::make(PodcastFeed::toString())
+            ->header('Content-Type', 'text/xml');
+    }
+}

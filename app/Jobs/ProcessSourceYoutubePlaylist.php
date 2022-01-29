@@ -46,16 +46,20 @@ class ProcessSourceYoutubePlaylist implements ShouldQueue
                 switch ($item->snippet->resourceId->kind) {
                     case "youtube#video":
                         $videoUrl = "https://www.youtube.com/watch?v=" . $item->snippet->resourceId->videoId;
-                        if (Episode::query()->where('source_url', '=', $videoUrl)->doesntExist()) {
+                        if ($this->source->feed()
+                            ->where('source_url', '=', $videoUrl)
+                            ->doesntExist()) {
                             Log::info("Processing ..." . $videoUrl);
                             $this->source->feed->addEpisode($videoUrl);
-                        }break;
+                        }
+                        break;
                 }
             });
 
             $this->source->error_count = 0;
             $this->source->save();
         } catch(\Throwable $t) {
+            dump($t->getMessage());
             $this->source->error_count++;
             $this->source->save();
         }

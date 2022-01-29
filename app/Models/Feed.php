@@ -39,6 +39,8 @@ class Feed extends Model
         'available' => 'boolean'
     ];
 
+    protected $appends = ['coverUrl', 'rssUrl'];
+
     protected $slugSource = 'title';
 
     public function getRouteKeyName()
@@ -75,7 +77,7 @@ class Feed extends Model
         return $query->where('user_id', '=', $user->id);
     }
 
-    public function coverUrl()
+    public function getCoverUrlAttribute()
     {
         if ($this->cover_photo_path && Storage::disk('public')->exists($this->cover_photo_path)) {
             return Storage::disk('public')->url($this->cover_photo_path);
@@ -84,7 +86,7 @@ class Feed extends Model
         }
     }
 
-    public function rssUrl()
+    public function getRssUrlAttribute()
     {
         if ($this->available) {
             return route('feed.rss', $this);

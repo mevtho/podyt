@@ -43,15 +43,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function(self $user) {
-            event(new Registered($user));
-        });
-    }
-
     public function feeds()
     {
         return $this->hasMany(Feed::class);

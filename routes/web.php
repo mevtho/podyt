@@ -1,8 +1,6 @@
 <?php
 
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,17 +13,19 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+Route::get('/', \App\Http\Controllers\WelcomeController::class);
+
+Route::get('/f/{feed:externalid}', \App\Http\Controllers\RssFeedController::class)->name('feed.rss');
+Route::get('/e/{episode:slug}.mp3', \App\Http\Controllers\DownloadEpisodeController::class)->name('feed.episode.mp3url');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
+
+    Route::resource('feed', App\Http\Controllers\FeedController::class);
+
+    Route::resource('feed.episode', App\Http\Controllers\EpisodeController::class);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
 require __DIR__.'/auth.php';
+
+
