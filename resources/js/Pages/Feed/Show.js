@@ -69,15 +69,17 @@ export default function Show({feed}) {
                                 Podcast Feed URL
                             </label>
                             <div className="mt-1 flex rounded-md shadow-sm">
-                            <span
-                                className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-primary-300 bg-primary-50 text-secondary-500 sm:text-sm">
+                            <a
+                                href={feed.rssUrl}
+                                target="_blank"
+                                className="inline-flex items-center px-3 rounded-l-md border border-r-0 border-primary-300 bg-primary-50 text-secondary-500 sm:text-sm hover:bg-primary-100 focus:bg-primary-100">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none"
                                      viewBox="0 0 24 24"
                                      stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                           d="M6 5c7.18 0 13 5.82 13 13M6 11a7 7 0 017 7m-6 0a1 1 0 11-2 0 1 1 0 012 0z"/>
                                 </svg>
-                            </span>
+                            </a>
                                 <input type="text" name="feed_url" id="feed_url"
                                        className="flex-1 min-w-0 block w-full px-3 py-2 rounded-none rounded-r-md focus:ring-primary-500 focus:border-primary-500 sm:text-sm border-primary-300"
                                        value={feed.rssUrl} readOnly/>
@@ -92,7 +94,7 @@ export default function Show({feed}) {
                         Episodes
                     </h3>
                     <div className="mt-3 flex sm:mt-0 sm:ml-4">
-                        <form onSubmit={handleSubmitAddEpisode}>
+                        <form onSubmit={handleSubmitAddEpisode} className="w-full">
                             <label htmlFor="source_url" className="sr-only">Youtube Video URL</label>
                             <div className="mt-1 flex rounded-md shadow-sm">
                                 <div className="relative flex items-stretch flex-grow focus-within:z-10">

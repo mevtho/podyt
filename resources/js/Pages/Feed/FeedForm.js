@@ -63,16 +63,16 @@ export default function FeedForm({feed = null}) {
                     <label htmlFor="cover_photo" className="block text-sm font-medium text-primary-700">
                         Cover Photo
                     </label>
-                    <div className="mt-1 flex items-center">
-                        <span className="h-32 w-32 overflow-hidden bg-primary-100">
+                    <div className="mt-1 flex gap-5 items-center">
+                        <span className="h-32 w-32 overflow-hidden bg-primary-100 shrink-0">
                             <img src={feed?.coverUrl || "/img/default-cover.png"} alt="cover"/>
                         </span>
-                        <div>
+                        <div className="flex-1">
                             <input type="file"
                                    id="cover_photo"
                                    accept=".png,.jpg,.jpeg,.gif"
                                    onChange={e => setData('cover_photo', e.target.files[0])}
-                                   className="ml-5 bg-white py-2 px-3 border border-primary-300 rounded-md shadow-sm text-sm leading-4 font-medium text-primary-700 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"/>
+                                   className="w-full bg-white py-2 px-3 border border-primary-300 rounded-md shadow-sm text-sm leading-4 font-medium text-primary-700 hover:bg-primary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"/>
                             {renderError("cover_photo")}
                         </div>
                     </div>

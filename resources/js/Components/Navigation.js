@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import {Link} from "@inertiajs/inertia-react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import NavLink from "@/Components/NavLink";
 import Dropdown from "@/Components/Dropdown";
@@ -90,10 +89,10 @@ export default function Navigation({auth}) {
             </div>
 
             <div className="pt-4 pb-1 border-t border-primary-400">
-                <div className="px-4">
-                    <div className="font-medium text-base text-white">{auth.user.name}</div>
-                    <div className="font-medium text-sm text-primary-50">{auth.user.email}</div>
-                </div>
+                {/*<div className="px-4">*/}
+                {/*    <div className="font-medium text-base text-white">{auth.user.name}</div>*/}
+                {/*    <div className="font-medium text-sm text-primary-50">{auth.user.email}</div>*/}
+                {/*</div>*/}
 
                 <div className="mt-3 space-y-1">
                     <ResponsiveNavLink method="post" href={route('logout')} as="button">
