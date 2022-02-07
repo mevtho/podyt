@@ -15,7 +15,7 @@ class DownloadEpisodeController extends Controller
      */
     public function __invoke(Request $request, $feedId, Episode $episode)
     {
-        abort_if($episode->feed_id !== $feedId, 404);
+        abort_if($episode->feed_id !== (int)$feedId, 404);
         abort_unless($episode->readyForDownload(), 404);
 
         $episode->mp3_access_count++;
