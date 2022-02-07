@@ -14,7 +14,7 @@ export default function Navigation({auth}) {
                 <div className="px-2 flex items-center lg:px-0">
                     <div className="flex-shrink-0 flex items-center">
                         <a href="/">
-                            <ApplicationLogo className="block h-9 w-auto text-primary-500"/>
+                            <ApplicationLogo className="block h-9 w-auto text-secondary-500"/>
                         </a>
                     </div>
 
