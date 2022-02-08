@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Alaouy\Youtube\Facades\Youtube;
 use App\Traits\HasSlug;
 use App\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Builder;
@@ -108,15 +109,20 @@ class Feed extends Model
 
     public function syncSources($sources)
     {
-        $this->sources()->delete();
-        $this->sources()->saveMany(collect($sources)->map(function ($url) {
+        $playlistIds = collect($sources)->map(function ($url) {
             $parts = parse_url($url);
             parse_str($parts['query'], $query);
-            $playlistId = $query['list'];
+            return $query['list'];
+        });
 
+        $playlists = Youtube::getPlaylistById($playlistIds->all());
+
+        $this->sources()->delete();
+        $this->sources()->saveMany(collect($playlists)->map(function ($playlist) {
             return new FeedSource([
+                'name' => $playlist->snippet->title,
                 'type' => FeedSource::TYPE_YOUTUBE_PLAYLIST,
-                'type_id' => $playlistId
+                'type_id' => $playlist->id
             ]);
         }));
     }

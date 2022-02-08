@@ -61,7 +61,7 @@ export default function Show({feed}) {
                         </div>
                         {
                             feed.sources && <ul>
-                                {feed.sources.map(source => <li key={source.feed_id}>{source.type_id}</li>)}
+                                {feed.sources.map(source => <li key={source.feed_id}>{source.name}</li>)}
                             </ul>
                         }
                         <div className="mt-6 max-w-xl">

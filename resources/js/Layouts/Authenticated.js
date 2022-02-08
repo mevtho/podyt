@@ -20,7 +20,7 @@ export default function Authenticated({ header, children }) {
                     </header>
                 )}
             </div>
-            <main className="-mt-32 mb-16">
+            <main className="-mt-32 pb-16">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-lg sm:rounded-lg">
                         <div className="p-6 bg-white border-b border-primary-200">

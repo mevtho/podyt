@@ -15,6 +15,7 @@ class FeedSource extends Model
 
     protected $fillable = [
         'feed_id',
+        'name',
         'type',
         'type_id'
     ];

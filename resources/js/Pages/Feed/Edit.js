@@ -7,7 +7,7 @@ import Section from "@/Components/Section";
 
 export default function Edit({feed}) {
     return <Authenticated
-        header={"Edit " + feed.title}
+        header={feed.title}
     >
         <Head title={feed.title} />
 
