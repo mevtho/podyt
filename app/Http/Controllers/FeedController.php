@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FeedSaveRequest;
-use App\Http\Requests\FeedUpdateRequest;
 use App\Models\Feed;
 use Illuminate\Http\Request;
-use Inertia\Inertia;
 
 class FeedController extends Controller
 {
@@ -48,7 +46,7 @@ class FeedController extends Controller
      */
     public function store(FeedSaveRequest $request)
     {
-        $feed = new Feed($request->only('title'));
+        $feed = new Feed($request->only('title', 'description'));
         if ($request->hasFile('cover_photo')) {
             $feed->cover_photo_path = $request->file('cover_photo')->storePublicly('covers', 'public');
         }
@@ -104,6 +102,7 @@ class FeedController extends Controller
     public function update(FeedSaveRequest $request, Feed $feed)
     {
         $feed->title = $request->input('title');
+        $feed->description = $request->input('description');
         if ($request->hasFile('cover_photo')) {
             $feed->cover_photo_path = $request->file('cover_photo')->storePublicly('covers', 'public');
         }

@@ -16,6 +16,7 @@ class FeedSaveRequest extends FormRequest
         return [
             'cover_photo' => ['sometimes', 'nullable','mimes:png,jpg,gif','max:2048'],
             'title' => ['required', 'string', 'min:2', 'max:400'],
+            'description' => ['sometimes', 'string', 'max:1024'],
             'sources' => ['sometimes', 'array'],
             'sources.*' => ['sometimes', 'string', 'url', 'regex:/https:\/\/www.youtube.com\/playlist\?list=\w+/']
         ];

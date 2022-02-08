@@ -5,11 +5,13 @@ import {PlusCircleIcon, TrashIcon} from "@heroicons/react/outline";
 export default function FeedForm({feed = null}) {
     const {data, setData, post, errors, progress} = useForm(Object.assign({
             title: "",
+            description: "",
             cover_photo: null,
             sources: []
         }, feed ? {
             _method: 'put',
             title: feed.title,
+            description: feed.description,
             cover_photo: null,
             sources: feed.sources.map(s => s.sourceUrl)
         } : {}
@@ -58,6 +60,20 @@ export default function FeedForm({feed = null}) {
                         />
                     </div>
                     {renderError("title")}
+                </div>
+                <div className="sm:col-span-6">
+                    <label htmlFor="description" className="block text-sm font-medium text-primary-700">
+                        Description
+                    </label>
+                    <div className="mt-1">
+                        <textarea
+                               id="description"
+                               rows="5"
+                               value={data.description} onChange={e => setData('description', e.target.value)}
+                               className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md"
+                        />
+                    </div>
+                    {renderError("description")}
                 </div>
                 <div className="sm:col-span-6">
                     <label htmlFor="cover_photo" className="block text-sm font-medium text-primary-700">

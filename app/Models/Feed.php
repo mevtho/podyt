@@ -25,6 +25,7 @@ class Feed extends Model
         'uuid',
         'user_id',
         'title',
+        'description',
         'slug',
         'available'
     ];

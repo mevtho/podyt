@@ -34,6 +34,20 @@ export default function Show({feed}) {
         Inertia.post(route('feed.episode.store', {feed}), {source_url: newEpisodeUrl})
     }
 
+    function renderSources() {
+        if (feed.sources?.length === 0) {
+            return null;
+        }
+
+        return <div>
+            <span className="font-bold">Following playlists : </span>
+            <ul>
+                {feed.sources.map(source => <li key={source.feed_id}>{source.name}</li>)}
+            </ul>
+        </div>
+
+    }
+
     return <Authenticated
         header={feed.title}
     >
@@ -59,11 +73,7 @@ export default function Show({feed}) {
                                 </Link>
                             </p>
                         </div>
-                        {
-                            feed.sources && <ul>
-                                {feed.sources.map(source => <li key={source.feed_id}>{source.name}</li>)}
-                            </ul>
-                        }
+                        { renderSources() }
                         <div className="mt-6 max-w-xl">
                             <label htmlFor="feed_url" className="block text-sm font-medium text-primary-700">
                                 Podcast Feed URL
