@@ -14,7 +14,7 @@ export default function Index({feeds}) {
                 {feeds.map(feed => (
                     <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-primary-200" key={feed.slug}>
                         <Link href={route('feed.show', {feed})}
-                              className="rounded-lg h-full bg-right-600 hover:bg-secondary-300">
+                              className="group rounded-lg h-full bg-right-600 hover:bg-secondary-400">
                             <div className="flex-1 flex flex-col p-8">
                                 <img className="w-32 h-32 flex-shrink-0 mx-auto"
                                      src={feed.coverUrl}
@@ -32,7 +32,7 @@ export default function Index({feeds}) {
                 ))}
                 <li className="col-span-1 flex flex-col text-center bg-white rounded-lg shadow divide-y divide-primary-200">
                     <Link href={route('feed.create')}
-                       className="h-full bg-right-600 hover:bg-secondary-100 text-secondary-100 hover:text-white">
+                       className="group h-full rounded-lg hover:bg-secondary-400 text-secondary-400 hover:text-white">
                         <div className="flex-1 flex flex-col p-8">
                             <PlusCircleIcon className="w-32 h-32 flex-shrink-0 mx-auto" />
                             <h3 className="mt-6 text-primary-900 text-sm font-medium">
