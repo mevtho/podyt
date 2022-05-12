@@ -5,9 +5,9 @@ import {PlusCircleIcon} from "@heroicons/react/outline";
 
 export default function Index({feeds}) {
     return <Authenticated
-        header="Your Feeds"
+        header="Feeds"
     >
-        <Head title="Your Feeds"/>
+        <Head title="Feeds"/>
 
         <div className="p-6">
             <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

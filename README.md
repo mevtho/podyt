@@ -20,3 +20,10 @@ In order to download / convert the youtube videos to mp3, youtube-dl has to be i
 
 For converting the downloaded youtube video to mp3, ffmpeg is required, accessible, and path provided in ```FFMPEG_BINARY``` .env variable
 
+=> https://ffmpeg.org/
+
+# Credits
+
+Background picture from unsplash : https://unsplash.com/photos/cVI8ViAhU04
+
+

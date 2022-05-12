@@ -10,8 +10,6 @@
 */
 
 return [
-    'key' => env('YOUTUBE_API_KEY'),
-
     'youtube-dl-bin' => env('YOUTUBE_DL_BINARY'),
 
     'ffmpeg-bin' => env('FFMPEG_BINARY')
