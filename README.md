@@ -16,6 +16,10 @@ For converting the downloaded youtube video to mp3, ffmpeg is required, accessib
 
 => https://ffmpeg.org/
 
+## Queue and workers
+
+Workers need to be configured following laravel's queue documentation to perform the conversion to mp3.
+
 # Credits
 
 Background picture from unsplash : https://unsplash.com/photos/cVI8ViAhU04
