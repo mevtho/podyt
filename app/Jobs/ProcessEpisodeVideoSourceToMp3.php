@@ -43,6 +43,10 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
      */
     public function handle()
     {
+        if ($this->episode->status !== 'pending') {
+            return;
+        }
+
         $this->episode->update([
             'status'=> 'processing'
         ]);

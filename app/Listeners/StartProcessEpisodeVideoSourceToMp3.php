@@ -4,7 +4,6 @@ namespace App\Listeners;
 
 use App\Events\EpisodeAdded;
 use App\Jobs\ProcessEpisodeVideoSourceToMp3;
-use Illuminate\Support\Facades\Storage;
 
 class StartProcessEpisodeVideoSourceToMp3
 {
