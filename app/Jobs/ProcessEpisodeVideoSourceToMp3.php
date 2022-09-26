@@ -19,6 +19,13 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
     public Episode $episode;
 
     /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 1800; // 30 minutes for now, should do better at some point probably
+
+    /**
      * Create a new job instance.
      *
      * @return void
