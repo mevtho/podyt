@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "illuminate/support": "~8.75"
+        "illuminate/support": "^v9.0.1"
     },
     "autoload": {
         "psr-4": {
