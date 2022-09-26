@@ -72,6 +72,10 @@ class Episode extends Model
     {
         switch ($this->mp3_location_type) {
             case 'path':
+                if (!$this->readyForDownload()) {
+                    return "";
+                }
+
                 return route('feed.episode.mp3url', ['feedId' => $this->feed_id, 'episode' => $this->slug]);
             case 'url':
                 return $this->mp3_location;

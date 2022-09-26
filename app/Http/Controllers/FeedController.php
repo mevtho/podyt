@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FeedSaveRequest;
+use App\Models\Episode;
 use App\Models\Feed;
 use Illuminate\Http\Request;
 
@@ -68,6 +69,8 @@ class FeedController extends Controller
     public function show(Request $request, Feed $feed)
     {
         $feed->load(['sources', 'episodes' => fn($query) => $query->orderBy('created_At', 'desc')]);
+
+        $feed->episodes->each(fn(Episode $e) => $e->download_url = $e->episodeFileUrl());
 
         return Inertia(
             'Feed/Show',

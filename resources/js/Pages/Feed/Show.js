@@ -159,7 +159,7 @@ export default function Show({feed}) {
                                         </div>
                                     </div>
                                     <div className="mt-2 flex justify-between">
-                                        <div>
+                                        <div className="flex gap-1">
                                             <a href={episode.source_url}
                                                   title="Youtube Source Video"
                                                   target="_blank">
@@ -171,6 +171,22 @@ export default function Show({feed}) {
                                                 </svg>
                                                 <span className="sr-only">Source</span>
                                             </a>
+
+                                            {episode.download_url &&
+                                                <a href={episode.download_url}
+                                                   className="text-secondary-500 hover:opacity-75 focus:opacity-75"
+                                                   title="MP3 File Download">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                         viewBox="0 0 24 24"
+                                                         strokeWidth="2" stroke="currentColor"
+                                                         className="flex-shrink-0 mr-1.5 h-5 w-5"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round"
+                                                              d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
+                                                    </svg>
+                                                    <span className="sr-only">Download</span>
+                                                </a>
+                                            }
                                         </div>
                                         <div className="mt-2 flex items-center text-sm text-primary-500 sm:mt-0">
                                             <CalendarIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary-400"/>
