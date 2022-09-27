@@ -12,7 +12,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
-class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
+class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue, ShouldBeUnique
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,6 +26,13 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
     public $timeout = 1800; // 30 minutes for now, should do better at some point probably
 
     /**
+     * The number of seconds after which the job's unique lock will be released.
+     *
+     * @var int
+     */
+    public $uniqueFor = 1800; // 30 minutes for now, should do better at some point probably
+
+    /**
      * Create a new job instance.
      *
      * @return void
@@ -37,7 +44,21 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue
     }
 
     /**
+     * The unique ID of the job.
+     *
+     * @return string
+     */
+    public function uniqueId()
+    {
+        return $this->episode->id;
+    }
+
+    /**
      * Execute the job.
+     *
+     * Can improve / making more async than simply using queues.
+     *  - Start the process and return without waiting for a result
+     *  - Process to callback to update status (or have status based on the mp3 file itself
      *
      * @return void
      */
