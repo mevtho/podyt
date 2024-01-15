@@ -33,6 +33,7 @@ class Episode extends Model
         'picture_url',
         'mp3_location_type',
         'mp3_location',
+        'delete_download_at',
         'status',
     ];
 
@@ -45,6 +46,8 @@ class Episode extends Model
         'id' => 'integer',
         'feed_id' => 'integer',
         'duration' => 'integer',
+
+        'delete_download_at' => 'date',
     ];
 
     public $dispatchesEvents = [
@@ -86,5 +89,15 @@ class Episode extends Model
     public function scopePublished(Builder $query)
     {
         return $query->where('status', '=', 'published');
+    }
+
+    public function deleteDownload()
+    {
+        if (Storage::disk('download')->exists($this->mp3_location)) {
+            Storage::disk('download')->delete($this->mp3_location);
+        }
+
+        $this->delete_download_at = null;
+        $this->save();
     }
 }

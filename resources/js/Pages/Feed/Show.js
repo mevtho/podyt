@@ -191,7 +191,7 @@ export default function Show({feed}) {
                                         <div className="mt-2 flex items-center text-sm text-primary-500 sm:mt-0">
                                             <CalendarIcon className="flex-shrink-0 mr-1.5 h-5 w-5 text-primary-400"/>
                                             <p>
-                                                <span className="mr-2">Added</span>
+                                                <span className="mr-1">Added</span>
                                                 <time
                                                     dateTime={format(parseISO(episode.created_at), "MMM do")}>
                                                     {format(parseISO(episode.created_at), "MMM do")}

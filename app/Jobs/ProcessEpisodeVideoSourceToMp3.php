@@ -107,7 +107,8 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue, ShouldBeUnique
         $this->episode->update([
             'status' =>'published',
             'mp3_location_type' => 'path',
-            'mp3_location' => $fileName
+            'mp3_location' => $fileName,
+            'delete_download_at' => now()->addDays(7)
         ]);
 
     }
