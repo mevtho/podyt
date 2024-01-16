@@ -93,10 +93,11 @@ class Episode extends Model
 
     public function deleteDownload()
     {
-        if (Storage::disk('download')->exists($this->mp3_location)) {
+        if (!empty($this->mp3_location) && Storage::disk('download')->exists($this->mp3_location)) {
             Storage::disk('download')->delete($this->mp3_location);
         }
 
+        $this->mp3_location = null;
         $this->delete_download_at = null;
         $this->save();
     }
