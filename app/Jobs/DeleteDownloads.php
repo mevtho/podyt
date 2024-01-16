@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class DeleteDownloads implements ShouldQueue
 {
@@ -31,11 +32,16 @@ class DeleteDownloads implements ShouldQueue
      */
     public function handle()
     {
+        Log::info('Deleting downloads ...');
+
         $expiredDownloads = Episode::whereNotNull('delete_download_at')
             ->where('delete_download_at', '<', now())
             ->get();
 
+        Log::info('Found ' . $expiredDownloads->count() . ' episodes to delete');
+
         $expiredDownloads->each(function ($episode) {
+            Log::info('Deleting download for episode ' . $episode->id);
             $episode->deleteDownload();
         });
     }
