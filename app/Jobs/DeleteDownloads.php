@@ -34,9 +34,7 @@ class DeleteDownloads implements ShouldQueue
     {
         Log::info('Deleting downloads ...');
 
-        $expiredDownloads = Episode::whereNotNull('delete_download_at')
-            ->where('delete_download_at', '<', now())
-            ->get();
+        $expiredDownloads = Episode::whereNotNull('delete_download_at')->where('delete_download_at', '<', now())->get();
 
         Log::info('Found ' . $expiredDownloads->count() . ' episodes to delete');
 

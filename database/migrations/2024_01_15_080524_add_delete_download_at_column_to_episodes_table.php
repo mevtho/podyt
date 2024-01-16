@@ -16,6 +16,12 @@ return new class extends Migration
         Schema::table('episodes', function (Blueprint $table) {
             $table->date('delete_download_at')->nullable()->after('mp3_location_type');
         });
+
+        // Update the existing episodes (not many so we can do it this way)
+        \App\Models\Episode::get()->each(function ($episode) {
+            $episode->delete_download_at = $episode->created_at->addDays(7);
+            $episode->save();
+        });
     }
 
     /**
