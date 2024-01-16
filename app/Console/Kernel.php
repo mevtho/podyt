@@ -31,12 +31,6 @@ class Kernel extends ConsoleKernel
     {
         $this->load(__DIR__.'/Commands');
 
-        $this->command('test', function () {
-            $this->info('test');
-            DeleteDownloads::dispatchSync();
-            $this->info('dispatched ??');
-        });
-
         require base_path('routes/console.php');
     }
 }
