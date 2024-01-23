@@ -68,6 +68,7 @@ class Episode extends Model
     {
         return $this->status === 'published'
             && $this->mp3_location_type === 'path'
+            && !empty($this->mp3_location)
             && Storage::disk('download')->exists($this->mp3_location);
     }
 
