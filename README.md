@@ -4,6 +4,10 @@ Create a podcast feed from youtube videos
 
 # Configuration
 
+## Youtube API
+
+Set the api key in the .env file as ```YOUTUBE_API_KEY```
+
 ## Youtube-dl
 
 In order to download / convert the youtube videos to mp3, youtube-dl has to be installed and accessible at the path specified as ```YOUTUBE_DL_BINARY``` in the .env file

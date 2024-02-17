@@ -6,6 +6,7 @@ use App\Http\Requests\FeedSaveRequest;
 use App\Models\Episode;
 use App\Models\Feed;
 use Illuminate\Http\Request;
+use Inertia\ResponseFactory;
 
 class FeedController extends Controller
 {
@@ -64,7 +65,7 @@ class FeedController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Feed $feed
-     * @return \Illuminate\Http\Response
+     * @return ResponseFactory
      */
     public function show(Request $request, Feed $feed)
     {
@@ -83,7 +84,7 @@ class FeedController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Feed $feed
-     * @return \Illuminate\Http\Response
+     * @return ResponseFactory
      */
     public function edit(Request $request, Feed $feed)
     {
@@ -100,12 +101,12 @@ class FeedController extends Controller
     /**
      * @param \App\Http\Requests\FeedSaveRequest $request
      * @param \App\Models\Feed $feed
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(FeedSaveRequest $request, Feed $feed)
     {
         $feed->title = $request->input('title');
-        $feed->description = $request->input('description');
+        $feed->description = $request->input('description') ?? '';
         if ($request->hasFile('cover_photo')) {
             $feed->cover_photo_path = $request->file('cover_photo')->storePublicly('covers', 'public');
         }
@@ -123,7 +124,7 @@ class FeedController extends Controller
     /**
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\Feed $feed
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Request $request, Feed $feed)
     {
