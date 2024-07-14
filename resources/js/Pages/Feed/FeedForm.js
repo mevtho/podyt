@@ -7,11 +7,13 @@ export default function FeedForm({feed = null}) {
             title: "",
             description: "",
             cover_photo: null,
-            sources: []
+            sources: [],
+            mode: 'podcast'
         }, feed ? {
             _method: 'put',
             title: feed.title,
             description: feed.description,
+            mode: feed.mode,
             cover_photo: null,
             sources: feed.sources.map(s => s.sourceUrl)
         } : {}
@@ -62,15 +64,30 @@ export default function FeedForm({feed = null}) {
                     {renderError("title")}
                 </div>
                 <div className="sm:col-span-6">
+                    <label htmlFor="title" className="block text-sm font-medium text-primary-700">
+                        Mode
+                    </label>
+                    <div className="mt-1">
+                        <select id="mode"
+                                value={data.mode} onChange={e => setData('mode', e.target.value)}
+                                required
+                        >
+                            <option value='podcast'>Podcast</option>
+                            <option value='answer'>Answer</option>
+                        </select>
+                    </div>
+                    {renderError("mode")}
+                </div>
+                <div className="sm:col-span-6">
                     <label htmlFor="description" className="block text-sm font-medium text-primary-700">
                         Description
                     </label>
                     <div className="mt-1">
                         <textarea
-                               id="description"
-                               rows="5"
-                               value={data.description} onChange={e => setData('description', e.target.value)}
-                               className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md"
+                            id="description"
+                            rows="5"
+                            value={data.description} onChange={e => setData('description', e.target.value)}
+                            className="shadow-sm focus:ring-primary-500 focus:border-primary-500 block w-full sm:text-sm border-primary-300 rounded-md"
                         />
                     </div>
                     {renderError("description")}

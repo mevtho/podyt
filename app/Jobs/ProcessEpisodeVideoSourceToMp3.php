@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Episode;
+use App\Models\Feed;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -105,7 +106,9 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue, ShouldBeUnique
         }
 
         $this->episode->update([
-            'status' =>'published',
+            'status' => $this->episode->feed->mode === Feed::FEED_PODCAST
+                ? 'published'
+                : 'pending_answer',
             'mp3_location_type' => 'path',
             'mp3_location' => $fileName,
             'delete_download_at' => now()->addDays(7)
