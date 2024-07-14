@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Workflows;
+namespace App\Workflows\Activities;
 
 use Workflow\Activity;
 
