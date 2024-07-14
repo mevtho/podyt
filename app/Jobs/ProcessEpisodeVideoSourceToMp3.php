@@ -81,7 +81,7 @@ class ProcessEpisodeVideoSourceToMp3 implements ShouldQueue, ShouldBeUnique
         $downloadPath = Storage::disk('download')->path($fileName);
 
         $cmd = sprintf(
-            "%s --extract-audio --audio-format mp3 --prefer-ffmpeg --ffmpeg-location %s --output %s %s 2>&1",
+            "%s --extract-audio --audio-format mp3 --prefer-ffmpeg --ffmpeg-location %s --output \"%s\" \"%s\" 2>&1",
             /* youtube-dl */ config('youtube.youtube-dl-bin'),
             /* --ffmpeg-location */ config('youtube.ffmpeg-bin'),
             /* --output */ $downloadPath,

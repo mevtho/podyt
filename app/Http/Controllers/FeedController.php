@@ -48,7 +48,11 @@ class FeedController extends Controller
      */
     public function store(FeedSaveRequest $request)
     {
-        $feed = new Feed($request->only('title', 'description'));
+        $feed = new Feed([
+            'title' => $request->input('title'),
+            'description' => $request->input('description') ?? ''
+        ]);
+
         if ($request->hasFile('cover_photo')) {
             $feed->cover_photo_path = $request->file('cover_photo')->storePublicly('covers', 'public');
         }
