@@ -16,6 +16,9 @@ class Feed extends Model
     use HasUuid;
     use HasSlug;
 
+    const FEED_PODCAST = 'podcast';
+    const FEED_ANSWER = 'answer';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -27,7 +30,8 @@ class Feed extends Model
         'title',
         'description',
         'slug',
-        'available'
+        'available',
+        'mode'
     ];
 
     /**

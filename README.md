@@ -8,11 +8,15 @@ Create a podcast feed from youtube videos
 
 Set the api key in the .env file as ```YOUTUBE_API_KEY```
 
-## Youtube-dl
+## OpenAI API
+
+To use the openai api (for answer feeds), set the api key in the .env file as ```OPENAI_API_KEY```
+
+## YTDLP
 
 In order to download / convert the youtube videos to mp3, youtube-dl has to be installed and accessible at the path specified as ```YOUTUBE_DL_BINARY``` in the .env file
 
-=> https://youtube-dl.org/
+=> https://github.com/yt-dlp/yt-dlp
 
 ## FFMPEG
 
@@ -22,7 +26,9 @@ For converting the downloaded youtube video to mp3, ffmpeg is required, accessib
 
 ## Queue and workers
 
-Workers need to be configured following laravel's queue documentation to perform the conversion to mp3.
+Workers need to be configured following laravel's queue documentation to perform the conversion to mp3 and associated tasks.
+
+**Required to be database or [laravel-workflow](https://github.com/laravel-workflow/laravel-workflow) compatible driver (not sync)**
 
 # Credits
 

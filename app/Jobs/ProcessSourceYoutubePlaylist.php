@@ -5,12 +5,14 @@ namespace App\Jobs;
 use Alaouy\Youtube\Facades\Youtube;
 use App\Models\Episode;
 use App\Models\FeedSource;
+use App\Workflows\NewVideoInPlaylist;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Workflow\WorkflowStub;
 
 class ProcessSourceYoutubePlaylist implements ShouldQueue
 {
@@ -50,8 +52,10 @@ class ProcessSourceYoutubePlaylist implements ShouldQueue
                             ->where('feed_id', '=', $this->source->feed_id)
                             ->where('source_url', '=', $videoUrl)
                             ->doesntExist()) {
+
                             Log::info("Processing ..." . $videoUrl);
-                            $this->source->feed->addEpisode($videoUrl);
+                            $episode = $this->source->feed->addEpisode($videoUrl);
+                            Log::info("Created episode ...".$episode->id);
                         }
                         break;
                 }
@@ -60,7 +64,7 @@ class ProcessSourceYoutubePlaylist implements ShouldQueue
             $this->source->error_count = 0;
             $this->source->save();
         } catch(\Throwable $t) {
-            dump($t->getMessage());
+            Log::info("Error processing source " . $this->source->id);
             $this->source->error_count++;
             $this->source->save();
         }

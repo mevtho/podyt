@@ -50,7 +50,8 @@ class FeedController extends Controller
     {
         $feed = new Feed([
             'title' => $request->input('title'),
-            'description' => $request->input('description') ?? ''
+            'description' => $request->input('description') ?? '',
+            'mode' => $request->input('mode')
         ]);
 
         if ($request->hasFile('cover_photo')) {
@@ -111,6 +112,7 @@ class FeedController extends Controller
     {
         $feed->title = $request->input('title');
         $feed->description = $request->input('description') ?? '';
+
         if ($request->hasFile('cover_photo')) {
             $feed->cover_photo_path = $request->file('cover_photo')->storePublicly('covers', 'public');
         }
