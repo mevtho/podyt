@@ -77,7 +77,7 @@ export default function Show({feed}) {
                         {renderSources()}
                         <div className="mt-6 max-w-xl">
                             <label htmlFor="feed_url" className="block text-sm font-medium text-primary-700">
-                                Podcast Feed URL
+                                Feed URL
                             </label>
                             <div className="mt-1 flex rounded-md shadow-sm">
                                 <a
