@@ -69,8 +69,10 @@ export default function FeedForm({feed = null}) {
                     </label>
                     <div className="mt-1">
                         <select id="mode"
+                                className={`shadow-sm focus:ring-primary-500 focus:border-primary-500 block sm:text-sm border-primary-300 rounded-md ${!!feed ? 'bg-gray-50 text-gray-400': ''}`}
                                 value={data.mode} onChange={e => setData('mode', e.target.value)}
-                                required
+                                required={!feed}
+                                disabled={!!feed}
                         >
                             <option value='podcast'>Podcast</option>
                             <option value='answer'>Answer</option>

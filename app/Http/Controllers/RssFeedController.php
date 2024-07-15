@@ -34,6 +34,20 @@ class RssFeedController extends Controller
             'copyright'   => '',
         ]);
 
+        switch ($feed->mode) {
+            case Feed::FEED_PODCAST:
+                $this->asPodcastContent($feed);
+                break;
+            case Feed::FEED_ANSWER:
+                $this->asAnswerContent($feed);
+                break;
+        }
+
+        return Response::make(PodcastFeed::toString())
+            ->header('Content-Type', 'text/xml');
+    }
+
+    private function asPodcastContent(Feed $feed) {
         foreach($feed->episodes as $episode)
         {
             PodcastFeed::addMedia([
@@ -47,8 +61,17 @@ class RssFeedController extends Controller
                 'image'       => $episode->picture_url,
             ]);
         }
+    }
 
-        return Response::make(PodcastFeed::toString())
-            ->header('Content-Type', 'text/xml');
+    private function asAnswerContent(Feed $feed) {
+        foreach($feed->episodes as $episode)
+        {
+            PodcastFeed::addMedia([
+                'title'       => $episode->title,
+                'description' => $episode->answer_answer,
+                'publish_at'  => $episode->created_at->format(\DateTime::RSS),
+                'guid'        => $episode->uuid,
+            ]);
+        }
     }
 }

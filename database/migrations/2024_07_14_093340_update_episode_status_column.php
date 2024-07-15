@@ -8,29 +8,22 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
-     *
-     * @return void
      */
-    public function up()
+    public function up(): void
     {
         Schema::table('episodes', function (Blueprint $table) {
-            $table->string('transcription')->nullable();
-            $table->string('answer_question')->nullable();
-            $table->text('answer_answer')->nullable();
+            $table->enum('status', ["pending", "processing", "downloaded", "transcribed", "answered", "published", "failed"])->change();
         });
     }
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::table('episodes', function (Blueprint $table) {
-            $table->dropColumn('transcription');
-            $table->dropColumn('answer_question');
-            $table->dropColumn('answer_answer');
+            $table->enum('status', ["pending", "processing", "published", "failed"]);
         });
+
     }
 };

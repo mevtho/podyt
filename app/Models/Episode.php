@@ -35,6 +35,9 @@ class Episode extends Model
         'mp3_location',
         'delete_download_at',
         'status',
+        'transcription',
+        'answer_question',
+        'answer_answer',
     ];
 
     /**

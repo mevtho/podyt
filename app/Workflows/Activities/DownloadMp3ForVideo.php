@@ -2,7 +2,6 @@
 
 namespace App\Workflows\Activities;
 
-use App\Jobs\ProcessEpisodeVideoSourceToMp3;
 use App\Models\Episode;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -10,16 +9,10 @@ use Workflow\Activity;
 
 class DownloadMp3ForVideo extends Activity
 {
+    public $tries = 3;
+
     public function execute(Episode $episode)
     {
-        if ($episode->status !== 'pending') {
-            return;
-        }
-
-        $episode->update([
-            'status'=> 'processing'
-        ]);
-
         $sourceUrl = $episode->source_url;
 
         // Double check youtube url
@@ -45,19 +38,16 @@ class DownloadMp3ForVideo extends Activity
                 Storage::disk('download')->delete($fileName);
             }
 
-            $episode->update([
-                'status' =>'failed'
-            ]);
-
-            return;
+            throw new \Exception("Download failed for episode {$episode->uuid}");
         }
 
         $episode->update([
-            'status' =>'published',
+            'status' => 'downloaded',
             'mp3_location_type' => 'path',
             'mp3_location' => $fileName,
             'delete_download_at' => now()->addDays(7)
         ]);
 
+        return $episode;
     }
 }

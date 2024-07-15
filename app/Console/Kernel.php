@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Jobs\CheckYoutubePlaylistSourceUpdates;
 use App\Jobs\DeleteDownloads;
+use App\Workflows\NewVideoInPlaylist;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -20,6 +21,10 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->job(new CheckYoutubePlaylistSourceUpdates())->everyMinute();
         $schedule->job(new DeleteDownloads())->daily();
+
+        $schedule->command('model:prune', [
+            '--model' => NewVideoInPlaylist::class,
+        ])->daily();
     }
 
     /**

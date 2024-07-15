@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a86cb328b2c8f31e2ac321cf5e36af57",
+    "content-hash": "297f7a5cd3116a77bd71e0c928624692",
     "packages": [
         {
             "name": "alaouy/youtube",
@@ -1366,12 +1366,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f5f9383af919ef74b00eacb23b4a88fcf390743c"
+                "reference": "60d780f3aa96e28a4a1cbeb75c6514eb6bc58871"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f5f9383af919ef74b00eacb23b4a88fcf390743c",
-                "reference": "f5f9383af919ef74b00eacb23b4a88fcf390743c",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/60d780f3aa96e28a4a1cbeb75c6514eb6bc58871",
+                "reference": "60d780f3aa96e28a4a1cbeb75c6514eb6bc58871",
                 "shasum": ""
             },
             "require": {
@@ -1565,7 +1565,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2024-07-12T17:57:37+00:00"
+            "time": "2024-07-15T01:01:03+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -9857,7 +9857,7 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "^8.1",
+        "php": "^8.3",
         "ext-dom": "*"
     },
     "platform-dev": [],

@@ -4,11 +4,12 @@
     "description": "podyt - build a podcast feed from youtube videos",
     "require": {
         "php": "^8.3",
+        "ext-pdo": "*",
         "ext-dom": "*",
         "alaouy/youtube": "^v2.2.5",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^v1.3.0",
-        "laravel-workflow/laravel-workflow": "^1.0",
+        "laravel-workflow/laravel-workflow": "^1.0.26",
         "laravel/framework": "^11.x-dev",
         "laravel/sanctum": "^4.x-dev",
         "laravel/tinker": "^2.7",

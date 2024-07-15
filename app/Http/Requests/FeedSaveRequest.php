@@ -13,14 +13,20 @@ class FeedSaveRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'cover_photo' => ['sometimes', 'nullable','mimes:png,jpg,gif','max:2048'],
             'title' => ['required', 'string', 'min:2', 'max:400'],
             'description' => ['sometimes', 'nullable', 'string', 'max:1024'],
-            'mode' => ['required', 'in:podcast,answer'],
             'sources' => ['sometimes', 'array'],
             'sources.*' => ['sometimes', 'string', 'url', 'regex:/https:\/\/www.youtube.com\/playlist\?list=\w+/']
         ];
+
+        // Create a new feed
+        if ($this->method() === 'POST') {
+            $rules['mode'] = ['required', 'in:podcast,answer'];
+        }
+
+        return $rules;
     }
 
     public function messages() {
