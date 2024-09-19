@@ -12,5 +12,7 @@
 return [
     'youtube-dl-bin' => env('YOUTUBE_DL_BINARY'),
 
+    'youtube-dl-proxies' => explode(",", env('YOUTUBE_DL_USE_PROXIES', "")),
+
     'ffmpeg-bin' => env('FFMPEG_BINARY')
 ];

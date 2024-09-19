@@ -21,10 +21,13 @@ class DownloadMp3ForVideo extends Activity
 
         $downloadPath = Storage::disk('download')->path($fileName);
 
+        $proxies = $this->getProxyParameter();
+
         $cmd = sprintf(
-            "%s --extract-audio --audio-format mp3 --prefer-ffmpeg --ffmpeg-location %s --output \"%s\" \"%s\" 2>&1",
+            "%s --extract-audio --audio-format mp3 --prefer-ffmpeg --ffmpeg-location %s %s --output \"%s\" \"%s\" 2>&1",
             /* youtube-dl */ config('youtube.youtube-dl-bin'),
             /* --ffmpeg-location */ config('youtube.ffmpeg-bin'),
+            $proxies,
             /* --output */ $downloadPath,
             $sourceUrl
         );
@@ -49,5 +52,21 @@ class DownloadMp3ForVideo extends Activity
         ]);
 
         return $episode;
+    }
+
+    private function getProxyParameter() {
+        $proxies = config('youtube.youtube-dl-proxies');
+
+        if (empty($proxies)) {
+            return "";
+        }
+
+        $aProxy = collect($proxies)->random(1)
+            ->map(fn ($proxy) => trim($proxy, " \""))
+            ->first();
+
+        return $aProxy
+            ? "--proxy " . $aProxy
+            : "";
     }
 }

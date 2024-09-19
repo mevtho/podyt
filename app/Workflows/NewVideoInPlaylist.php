@@ -20,18 +20,24 @@ class NewVideoInPlaylist extends Workflow
     {
         $episode = Episode::with('feed')->findOrFail($episodeId);
 
-        $result = yield WorkflowStub::sideEffect(fn() => $episode->update(['status'=> 'processing']));
+        try {
+            $result = yield WorkflowStub::sideEffect(fn() => $episode->update(['status' => 'processing']));
 
-        $result = yield ActivityStub::make(DownloadMp3ForVideo::class, $episode);
+            $result = yield ActivityStub::make(DownloadMp3ForVideo::class, $episode);
 
-        if ($episode->feed->mode === Feed::FEED_ANSWER) {
-            $result = yield ActivityStub::make(TranscribeAudioFile::class, $episode);
+            if ($episode->feed->mode === Feed::FEED_ANSWER) {
+                $result = yield ActivityStub::make(TranscribeAudioFile::class, $episode);
 
-            $result = yield ActivityStub::make(AnswerQuestionFromTranscription::class, $episode);
+                $result = yield ActivityStub::make(AnswerQuestionFromTranscription::class, $episode);
+            }
+
+            $result = yield WorkflowStub::sideEffect(fn() => $episode->update(['status' => 'published']));
+
+            return $result;
+        } catch (\Exception $e) {
+            $episode->update(['status' => 'failed']);
+
+            throw $e;
         }
-
-        $result = yield WorkflowStub::sideEffect(fn() => $episode->update(['status'=> 'published']));
-
-        return $result;
     }
 }
