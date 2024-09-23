@@ -5,14 +5,12 @@ namespace App\Jobs;
 use Alaouy\Youtube\Facades\Youtube;
 use App\Models\Episode;
 use App\Models\FeedSource;
-use App\Workflows\NewVideoInPlaylist;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
-use Workflow\WorkflowStub;
 
 class ProcessSourceYoutubePlaylist implements ShouldQueue
 {

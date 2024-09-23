@@ -2,10 +2,8 @@
 
 namespace App\Jobs;
 
-use Alaouy\Youtube\Facades\Youtube;
 use App\Models\FeedSource;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
