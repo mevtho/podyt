@@ -20,9 +20,10 @@ class TranscribeAudioFile extends Activity
 
         $object = $client->audio()->transcribe([
             'model' => 'whisper-1',
+            'prompt' => 'The audio will never be in Welsh. Use the following text to help identify the language : ' . $episode->title,
             'file' => fopen(Storage::disk('download')->path($episode->mp3_location), 'r'),
             'response_format' => 'verbose_json',
-            'timestamp_granularities' => ['segment', 'word']
+            'timestamp_granularities' => ['segment', 'word'],
         ]);
 
         try {

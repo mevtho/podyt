@@ -11,6 +11,8 @@ use Workflow\ActivityStub;
 use Workflow\Workflow;
 use Workflow\WorkflowStub;
 
+use Illuminate\Support\Facades\Log;
+
 class NewVideoInPlaylist extends Workflow
 {
     public function execute($episodeId)
@@ -32,6 +34,8 @@ class NewVideoInPlaylist extends Workflow
 
             return $result;
         } catch (\Exception $e) {
+            Log::error('Workflow Exception : ' . $e->getMessage());
+
             $episode->update(['status' => 'failed']);
 
             throw $e;

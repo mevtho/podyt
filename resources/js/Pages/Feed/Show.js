@@ -31,7 +31,9 @@ export default function Show({feed}) {
     function handleSubmitAddEpisode(e) {
         e.preventDefault();
 
-        Inertia.post(route("feed.episode.store", {feed}), {source_url: newEpisodeUrl})
+        Inertia.post(route("feed.episode.store", {feed}), {source_url: newEpisodeUrl});
+
+        setNewEpisodeUrl("");
     }
 
     function renderSources() {

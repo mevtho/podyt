@@ -18,7 +18,7 @@ class AnswerQuestionFromTranscription extends Activity
         $client = \OpenAI::client(config('services.openai.api_key'));
 
         $explanation = implode("\n", [
-            "You are given the transcription and title of a youtube video:",
+            "You are given the following transcription and title of a youtube video:",
             "<transcription>",
             $episode->transcription,
             "</transcription>",
@@ -26,7 +26,7 @@ class AnswerQuestionFromTranscription extends Activity
             $episode->title,
             "</title>",
             "If the title is a question, provide the answer to the question, otherwise make a question from the title and answer it",
-            "The answer has to come from the transcription. Answer with bullet points when appropriate. If the transcript doesn't have the answer or don't know or can't answer the question, DO NOT make up an answer, answer with 'I don't know'",
+            "The answer must come from the transcription. Answer with bullet points when appropriate. If the transcript doesn't have the answer, you don't know or you can't answer the question, DO NOT make up an answer, answer with 'I don't know'",
             "The expected format for this answer is a json object with the following structure:",
             "{ \"question\": \"<question>\", \"answer\": \"<answer>\" }"
         ]);
@@ -41,6 +41,14 @@ class AnswerQuestionFromTranscription extends Activity
         $text = trim($result->choices[0]->message->content);
 
         $answer = json_decode($text);
+
+        if (empty($answer?->question) || empty($answer?->answer)) {
+            $episode->update([
+                'random' => $text
+            ]);
+
+            throw new \Exception("Invalid answer from OpenAI for episode {$episode->uuid}");
+        }
 
         $episode->update([
             'answer_question' => $answer->question,
