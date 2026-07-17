@@ -4104,15 +4104,6 @@ function Show(_ref) {
     };
   }, [feed]);
 
-  function handleRetryEpisode(feed, episode) {
-    _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__.Inertia.post(route("feed.episode.retry", {
-      feed: feed,
-      episode: episode
-    }), {}, {
-      preserveScroll: true
-    });
-  }
-
   function handleSubmitAddEpisode(e) {
     e.preventDefault();
     _inertiajs_inertia__WEBPACK_IMPORTED_MODULE_3__.Inertia.post(route("feed.episode.store", {
@@ -4289,11 +4280,17 @@ function Show(_ref) {
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
                       className: (0,_Helpers_classNames__WEBPACK_IMPORTED_MODULE_4__["default"])(episode.status === "published" ? "bg-green-100 text-green-800" : "", episode.status === "failed" ? "bg-red-100 text-red-800" : "", ["published", "failed"].indexOf(episode.status) === -1 ? "bg-primary-100 text-primary-800" : "", "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"),
                       children: episode.status
-                    }), episode.status === "failed" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("button", {
+                    }), episode.status === "failed" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                      as: "button",
                       type: "button",
-                      onClick: function onClick() {
-                        return handleRetryEpisode(feed, episode);
-                      },
+                      method: "post",
+                      href: route("feed.episode.retry", {
+                        feed: feed,
+                        episode: episode
+                      }),
+                      preserveScroll: true,
+                      preserveState: true,
+                      only: ["feed"],
                       title: "Retry download",
                       className: "ml-1 text-red-800 hover:opacity-75 focus:opacity-75",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_heroicons_react_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
