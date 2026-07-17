@@ -25,50 +25,67 @@ if ($baseUrl === '' || $token === '') {
     exit(1);
 }
 
-function apiGet(string $baseUrl, string $token, string $path): ?array
+/**
+ * Runs a curl command (without -w/output redirection baked in) and returns
+ * the HTTP status, raw body, and decoded JSON (null if the body wasn't
+ * valid JSON - e.g. an nginx/PHP error page instead of our API's response).
+ */
+function httpRequest(string $cmd): array
 {
-    $cmd = sprintf(
+    $raw = shell_exec($cmd . ' -w ' . escapeshellarg("\nHTTP_STATUS:%{http_code}") . ' 2>&1');
+    $raw = $raw ?? '';
+
+    $marker = strrpos($raw, "\nHTTP_STATUS:");
+    if ($marker === false) {
+        return ['status' => 0, 'body' => $raw, 'json' => null];
+    }
+
+    $body = substr($raw, 0, $marker);
+    $status = (int) trim(substr($raw, $marker + strlen("\nHTTP_STATUS:")));
+
+    return ['status' => $status, 'body' => $body, 'json' => json_decode($body, true)];
+}
+
+function apiGet(string $baseUrl, string $token, string $path): array
+{
+    return httpRequest(sprintf(
         'curl -sS -H %s %s',
         escapeshellarg("Authorization: Bearer {$token}"),
         escapeshellarg($baseUrl . $path)
-    );
-
-    $output = shell_exec($cmd);
-
-    return $output ? json_decode($output, true) : null;
+    ));
 }
 
-function apiPostFile(string $baseUrl, string $token, string $path, string $filePath): ?array
+function apiPostFile(string $baseUrl, string $token, string $path, string $filePath): array
 {
-    $cmd = sprintf(
+    return httpRequest(sprintf(
         'curl -sS -H %s -F %s %s',
         escapeshellarg("Authorization: Bearer {$token}"),
         escapeshellarg('file=@' . $filePath . ';type=audio/mpeg'),
         escapeshellarg($baseUrl . $path)
-    );
-
-    $output = shell_exec($cmd);
-
-    return $output ? json_decode($output, true) : null;
+    ));
 }
 
-function apiPostFail(string $baseUrl, string $token, string $path, string $error): void
+function apiPostFail(string $baseUrl, string $token, string $path, string $error): array
 {
-    $cmd = sprintf(
+    return httpRequest(sprintf(
         'curl -sS -H %s --data-urlencode %s %s',
         escapeshellarg("Authorization: Bearer {$token}"),
         escapeshellarg('error=' . $error),
         escapeshellarg($baseUrl . $path)
-    );
-
-    shell_exec($cmd);
+    ));
 }
 
 $processed = 0;
 
 while (true) {
-    $response = apiGet($baseUrl, $token, '/api/worker/jobs/next');
-    $job = $response['job'] ?? null;
+    $next = apiGet($baseUrl, $token, '/api/worker/jobs/next');
+
+    if ($next['json'] === null) {
+        echo "Failed to fetch next job (HTTP {$next['status']}): {$next['body']}\n";
+        break;
+    }
+
+    $job = $next['json']['job'] ?? null;
 
     if (!$job) {
         break;
@@ -96,8 +113,15 @@ while (true) {
         continue;
     }
 
-    $result = apiPostFile($baseUrl, $token, "/api/worker/jobs/{$episodeId}/complete", $outPath);
-    echo "Uploaded episode {$episodeId}: " . json_encode($result) . "\n";
+    $upload = apiPostFile($baseUrl, $token, "/api/worker/jobs/{$episodeId}/complete", $outPath);
+
+    if ($upload['status'] !== 200 || ($upload['json']['status'] ?? null) !== 'ok') {
+        echo "Upload failed for episode {$episodeId} (HTTP {$upload['status']}): {$upload['body']}\n";
+        echo "Leaving {$outPath} on disk so it isn't re-downloaded; the claim will go stale and can be retried.\n";
+        continue;
+    }
+
+    echo "Uploaded episode {$episodeId}.\n";
 
     @unlink($outPath);
     $processed++;

@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('feed', App\Http\Controllers\FeedController::class);
 
     Route::resource('feed.episode', App\Http\Controllers\EpisodeController::class);
+    Route::post('feed/{feed}/episode/{episode}/retry', [App\Http\Controllers\EpisodeController::class, 'retry'])->name('feed.episode.retry');
 });
 
 require __DIR__.'/auth.php';

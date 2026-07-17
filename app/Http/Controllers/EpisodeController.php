@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\EpisodeAdded;
 use App\Http\Requests\EpisodeStoreRequest;
 use App\Http\Requests\EpisodeUpdateRequest;
 use App\Models\Episode;
@@ -90,6 +91,26 @@ class EpisodeController extends Controller
     public function destroy(Request $request, Feed $feed, Episode $episode)
     {
         $episode->delete();
+
+        return redirect()->route('feed.show', ['feed' => $feed]);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Episode $episode
+     * @return \Illuminate\Http\Response
+     */
+    public function retry(Request $request, Feed $feed, Episode $episode)
+    {
+        abort_unless($episode->status === 'failed', 409, 'Episode is not in a failed state.');
+
+        $episode->update([
+            'status' => Episode::STATUS_PENDING,
+            'workflow_id' => null,
+            'claimed_at' => null,
+        ]);
+
+        event(new EpisodeAdded($episode));
 
         return redirect()->route('feed.show', ['feed' => $feed]);
     }

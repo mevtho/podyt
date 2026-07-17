@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {Head, Link} from "@inertiajs/inertia-react";
 import Authenticated from "@/Layouts/Authenticated";
-import {CalendarIcon, CogIcon} from "@heroicons/react/outline";
+import {CalendarIcon, CogIcon, RefreshIcon} from "@heroicons/react/outline";
 import {format, parseISO} from "date-fns";
 import {Inertia} from "@inertiajs/inertia";
 import classNames from "@/Helpers/classNames";
@@ -14,7 +14,6 @@ export default function Show({feed}) {
         processing: 30,
         default: (feed.sources?.length > 0) ? 30 : 120
     }
-
     useEffect(() => {
         const interval = (feed.episodes || []).reduce(
             (c, episode) => Math.min(c, statusToRefreshRate[episode.status] || statusToRefreshRate.default),
@@ -27,6 +26,10 @@ export default function Show({feed}) {
 
         return () => clearTimeout(timeoutId)
     }, [feed]);
+
+    function handleRetryEpisode(feed, episode) {
+        Inertia.post(route("feed.episode.retry", {feed, episode}), {}, {preserveScroll: true});
+    }
 
     function handleSubmitAddEpisode(e) {
         e.preventDefault();
@@ -158,6 +161,16 @@ export default function Show({feed}) {
                                             >
                                                 {episode.status}
                                             </p>
+                                            {episode.status === "failed" &&
+                                                <button
+                                                    type="button"
+                                                    onClick={() => handleRetryEpisode(feed, episode)}
+                                                    title="Retry download"
+                                                    className="ml-1 text-red-800 hover:opacity-75 focus:opacity-75">
+                                                    <RefreshIcon className="h-4 w-4"/>
+                                                    <span className="sr-only">Retry</span>
+                                                </button>
+                                            }
                                         </div>
                                     </div>
                                     <div className="mt-2 flex justify-between">
