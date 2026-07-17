@@ -27,10 +27,6 @@ export default function Show({feed}) {
         return () => clearTimeout(timeoutId)
     }, [feed]);
 
-    function handleRetryEpisode(feed, episode) {
-        Inertia.post(route("feed.episode.retry", {feed, episode}), {}, {preserveScroll: true});
-    }
-
     function handleSubmitAddEpisode(e) {
         e.preventDefault();
 
@@ -162,14 +158,19 @@ export default function Show({feed}) {
                                                 {episode.status}
                                             </p>
                                             {episode.status === "failed" &&
-                                                <button
+                                                <Link
+                                                    as="button"
                                                     type="button"
-                                                    onClick={() => handleRetryEpisode(feed, episode)}
+                                                    method="post"
+                                                    href={route("feed.episode.retry", {feed, episode})}
+                                                    preserveScroll
+                                                    preserveState
+                                                    only={["feed"]}
                                                     title="Retry download"
                                                     className="ml-1 text-red-800 hover:opacity-75 focus:opacity-75">
                                                     <RefreshIcon className="h-4 w-4"/>
                                                     <span className="sr-only">Retry</span>
-                                                </button>
+                                                </Link>
                                             }
                                         </div>
                                     </div>
