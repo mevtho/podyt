@@ -1131,21 +1131,13 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(229 0 0 / var(--tw-bg-opacity));
 }
-.bg-red-500 {
+.bg-gray-50 {
   --tw-bg-opacity: 1;
-  background-color: rgb(254 0 0 / var(--tw-bg-opacity));
+  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 .bg-green-100 {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
-}
-.bg-gray-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(229 231 235 / var(--tw-bg-opacity));
-}
-.bg-gray-50 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(249 250 251 / var(--tw-bg-opacity));
 }
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;

@@ -14,5 +14,11 @@ return [
 
     'youtube-dl-proxies' => explode(",", env('YOUTUBE_DL_USE_PROXIES', "")),
 
-    'ffmpeg-bin' => env('FFMPEG_BINARY')
+    'ffmpeg-bin' => env('FFMPEG_BINARY'),
+
+    'remote-download-enabled' => env('YOUTUBE_REMOTE_DOWNLOAD_ENABLED', false),
+
+    'remote-download-timeout' => env('YOUTUBE_REMOTE_DOWNLOAD_TIMEOUT', '3 days'),
+
+    'remote-worker-stale-claim-minutes' => env('YOUTUBE_REMOTE_WORKER_STALE_CLAIM_MINUTES', 30),
 ];

@@ -35,6 +35,8 @@ class Episode extends Model
         'mp3_location',
         'delete_download_at',
         'status',
+        'workflow_id',
+        'claimed_at',
         'transcription',
         'answer_question',
         'answer_answer',
@@ -52,6 +54,8 @@ class Episode extends Model
         'duration' => 'integer',
 
         'delete_download_at' => 'date',
+        'workflow_id' => 'integer',
+        'claimed_at' => 'datetime',
     ];
 
     public $dispatchesEvents = [

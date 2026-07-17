@@ -21,6 +21,7 @@ class StartProcessEpisodeVideoSourceToMp3 implements ShouldQueue
         Log::info('Starting ProcessEpisodeVideoSourceToMp3 job for episode ' . $event->episode->id);
 
         $workflow = WorkflowStub::make(NewVideoInPlaylist::class);
+        $event->episode->update(['workflow_id' => $workflow->id()]);
         $workflow->start($event->episode->id);
 
         Log::info('Started ProcessEpisodeVideoSourceToMp3 job for episode ' . $event->episode->id);

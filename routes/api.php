@@ -17,3 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('worker.auth')->prefix('worker')->group(function () {
+    Route::get('/jobs/next', \App\Http\Controllers\ClaimNextDownloadJobController::class);
+    Route::post('/jobs/{episode}/complete', \App\Http\Controllers\CompleteDownloadJobController::class);
+    Route::post('/jobs/{episode}/fail', \App\Http\Controllers\FailDownloadJobController::class);
+});

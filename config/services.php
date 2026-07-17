@@ -32,6 +32,10 @@ return [
 
     'openai' => [
         'api_key' => env('OPENAI_API_KEY')
-    ]
+    ],
+
+    'worker' => [
+        'token' => env('WORKER_API_TOKEN'),
+    ],
 
 ];

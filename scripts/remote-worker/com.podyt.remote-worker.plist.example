@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  macOS launchd agent that runs the worker every 10 minutes whenever the
+  laptop is awake. It drains the queue and exits each time, so there's no
+  need for it to run continuously.
+
+  Setup:
+    1. Fill in the real values below (WORKER_BASE_URL, WORKER_API_TOKEN, and
+       the paths to this repo / yt-dlp / ffmpeg / a writable tmp dir).
+    2. Copy to ~/Library/LaunchAgents/com.podyt.remote-worker.plist
+    3. launchctl load ~/Library/LaunchAgents/com.podyt.remote-worker.plist
+  To stop: launchctl unload ~/Library/LaunchAgents/com.podyt.remote-worker.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.podyt.remote-worker</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/php</string>
+        <string>/path/to/podyt/scripts/remote-worker/worker.php</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+        <key>WORKER_BASE_URL</key>
+        <string>https://podyt.example.com</string>
+        <key>WORKER_API_TOKEN</key>
+        <string>changeme</string>
+        <key>YOUTUBE_DL_BINARY</key>
+        <string>/opt/homebrew/bin/yt-dlp</string>
+        <key>FFMPEG_BINARY</key>
+        <string>/opt/homebrew/bin/ffmpeg</string>
+        <key>WORKER_TMP_DIR</key>
+        <string>/tmp</string>
+    </dict>
+
+    <key>StartInterval</key>
+    <integer>600</integer>
+
+    <key>StandardOutPath</key>
+    <string>/tmp/podyt-remote-worker.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/podyt-remote-worker.log</string>
+</dict>
+</plist>
