@@ -10,6 +10,10 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title><xsl:value-of select="title"/></title>
+<xsl:if test="itunes:image/@href or image/url">
+  <link rel="icon" href="{itunes:image/@href | image/url}"/>
+  <link rel="apple-touch-icon" href="{itunes:image/@href | image/url}"/>
+</xsl:if>
 <style>
   :root {
     color-scheme: light dark;
