@@ -75,7 +75,10 @@ class NewVideoInPlaylist extends Workflow
         } catch (\Exception $e) {
             Log::error('Workflow Exception : ' . $e->getMessage());
 
-            $episode->update(['status' => 'failed']);
+            $episode->update([
+                'status' => 'failed',
+                'error_message' => $e->getMessage(),
+            ]);
 
             throw $e;
         }

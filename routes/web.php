@@ -22,6 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', \App\Http\Controllers\DashboardController::class)->name('dashboard');
 
     Route::resource('feed', App\Http\Controllers\FeedController::class);
+    Route::post('feed/{feed}/source/{source}/reset-error-count', [App\Http\Controllers\FeedController::class, 'resetSourceErrorCount'])->name('feed.source.reset-error-count');
 
     Route::resource('feed.episode', App\Http\Controllers\EpisodeController::class);
     Route::post('feed/{feed}/episode/{episode}/retry', [App\Http\Controllers\EpisodeController::class, 'retry'])->name('feed.episode.retry');

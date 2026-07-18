@@ -3,6 +3,7 @@
 namespace App\Workflows\Activities;
 
 use App\Models\Episode;
+use Illuminate\Support\Str;
 use Workflow\Activity;
 
 class AnswerQuestionFromTranscription extends Activity
@@ -33,6 +34,7 @@ class AnswerQuestionFromTranscription extends Activity
 
         $result = $client->chat()->create([
             'model' => 'gpt-4o-mini',
+            'response_format' => ['type' => 'json_object'],
             'messages' => [
                 ['role' => 'user', 'content' => $explanation],
             ],
@@ -40,14 +42,23 @@ class AnswerQuestionFromTranscription extends Activity
 
         $text = trim($result->choices[0]->message->content);
 
+        // Defensive: some responses still come back wrapped in a markdown code fence
+        // despite the json_object response format being requested.
+        $text = preg_replace('/^```(?:json)?\s*|\s*```$/', '', $text);
+
         $answer = json_decode($text);
 
         if (empty($answer?->question) || empty($answer?->answer)) {
-            $episode->update([
-                'random' => $text
-            ]);
+            $reason = json_last_error() !== JSON_ERROR_NONE
+                ? json_last_error_msg()
+                : 'missing "question" or "answer" field';
 
-            throw new \Exception("Invalid answer from OpenAI for episode {$episode->uuid}");
+            throw new \Exception(sprintf(
+                'Invalid answer from OpenAI for episode %s (%s): %s',
+                $episode->uuid,
+                $reason,
+                Str::limit($text, 500)
+            ));
         }
 
         $episode->update([

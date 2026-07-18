@@ -175,6 +175,11 @@ export default function Show({feed}) {
                                             }
                                         </div>
                                     </div>
+                                    {episode.status === "failed" && episode.error_message &&
+                                        <p className="mt-1 text-xs text-red-600 truncate" title={episode.error_message}>
+                                            {episode.error_message}
+                                        </p>
+                                    }
                                     <div className="mt-2 flex justify-between">
                                         <div className="flex gap-1">
                                             <a href={episode.source_url}

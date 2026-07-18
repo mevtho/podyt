@@ -108,6 +108,7 @@ class EpisodeController extends Controller
             'status' => Episode::STATUS_PENDING,
             'workflow_id' => null,
             'claimed_at' => null,
+            'error_message' => null,
         ]);
 
         event(new EpisodeAdded($episode));

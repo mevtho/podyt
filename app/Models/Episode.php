@@ -40,7 +40,7 @@ class Episode extends Model
         'transcription',
         'answer_question',
         'answer_answer',
-        'random'
+        'error_message'
     ];
 
     /**

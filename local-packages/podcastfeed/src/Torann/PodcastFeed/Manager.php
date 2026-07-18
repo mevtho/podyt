@@ -201,6 +201,13 @@ class Manager
         // Create the DOM
         $dom = new \DOMDocument("1.0", "utf-8");
 
+        // Link an XSL stylesheet so the feed renders as a readable page
+        // when opened directly in a browser (e.g. iOS Safari) instead of raw XML.
+        $dom->appendChild($dom->createProcessingInstruction(
+            "xml-stylesheet",
+            'type="text/xsl" href="/feed.xsl"'
+        ));
+
         // Create the <rss>
         $rss = $dom->createElement("rss");
         $rss->setAttribute("xmlns:itunes", "http://www.itunes.com/dtds/podcast-1.0.dtd");

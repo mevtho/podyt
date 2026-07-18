@@ -67,6 +67,7 @@ class RssFeedController extends Controller
         {
             PodcastFeed::addMedia([
                 'title'       => $episode->title,
+                'subtitle'    => $episode->answer_question,
                 'description' => $episode->answer_answer,
                 'publish_at'  => $episode->created_at->format(\DateTime::RSS),
                 'guid'        => $episode->uuid,

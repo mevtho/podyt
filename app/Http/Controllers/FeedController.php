@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FeedSaveRequest;
 use App\Models\Episode;
 use App\Models\Feed;
+use App\Models\FeedSource;
 use Illuminate\Http\Request;
 use Inertia\ResponseFactory;
 
@@ -131,6 +132,23 @@ class FeedController extends Controller
         $request->session()->flash('feed.id', $feed->id);
 
         return redirect()->route('feed.show', $feed);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Feed $feed
+     * @param \App\Models\FeedSource $source
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function resetSourceErrorCount(Request $request, Feed $feed, FeedSource $source)
+    {
+        $this->authorize('update', $feed);
+
+        abort_unless($source->feed_id === $feed->id, 404);
+
+        $source->update(['error_count' => 0]);
+
+        return redirect()->route('feed.edit', ['feed' => $feed]);
     }
 
     /**
