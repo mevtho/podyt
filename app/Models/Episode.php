@@ -92,9 +92,15 @@ class Episode extends Model
 
     public function isStuckProcessing(): bool
     {
-        return $this->status === 'processing'
-            && $this->updated_at !== null
-            && $this->updated_at->lt(now()->subDays(config('youtube.processing-stuck-days')));
+        if ($this->status !== 'processing' || $this->updated_at === null) {
+            return false;
+        }
+
+        $updatedAt = $this->updated_at instanceof \Carbon\Carbon
+            ? $this->updated_at
+            : \Carbon\Carbon::parse($this->updated_at);
+
+        return $updatedAt->lt(now()->subDays(config('youtube.processing-stuck-days')));
     }
 
     public function getIsRetryableAttribute(): bool
