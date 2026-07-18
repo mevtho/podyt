@@ -46,6 +46,14 @@ class AnswerQuestionFromTranscription extends Activity
         // despite the json_object response format being requested.
         $text = preg_replace('/^```(?:json)?\s*|\s*```$/', '', $text);
 
+        // Defensive: the model sometimes emits raw newline/tab bytes inside a JSON
+        // string value (e.g. multi-line bullet answers) instead of escaping them,
+        // which json_decode rejects as a control character error even though the
+        // content itself is otherwise valid.
+        $text = preg_replace_callback('/"(?:\\\\.|[^"\\\\])*"/s', function ($match) {
+            return str_replace(["\r\n", "\n", "\r", "\t"], ['\\n', '\\n', '\\n', '\\t'], $match[0]);
+        }, $text);
+
         $answer = json_decode($text);
 
         if (empty($answer?->question) || empty($answer?->answer)) {
