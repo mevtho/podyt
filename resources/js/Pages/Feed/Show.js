@@ -151,13 +151,14 @@ export default function Show({feed}) {
                                                 className={classNames(
                                                     episode.status === "published" ? "bg-green-100 text-green-800" : "",
                                                     episode.status === "failed" ? "bg-red-100 text-red-800" : "",
-                                                    ["published", "failed"].indexOf(episode.status) === -1 ? "bg-primary-100 text-primary-800" : "",
+                                                    episode.status === "expired" ? "bg-yellow-100 text-yellow-800" : "",
+                                                    ["published", "failed", "expired"].indexOf(episode.status) === -1 ? "bg-primary-100 text-primary-800" : "",
                                                     "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"
                                                 )}
                                             >
                                                 {episode.status}
                                             </p>
-                                            {episode.status === "failed" &&
+                                            {episode.is_retryable &&
                                                 <Link
                                                     as="button"
                                                     type="button"
@@ -167,7 +168,7 @@ export default function Show({feed}) {
                                                     preserveState
                                                     only={["feed"]}
                                                     title="Retry download"
-                                                    className="ml-1 text-red-800 hover:opacity-75 focus:opacity-75">
+                                                    className="ml-1 text-primary-600 hover:opacity-75 focus:opacity-75">
                                                     <RefreshIcon className="h-4 w-4"/>
                                                     <span className="sr-only">Retry</span>
                                                 </Link>

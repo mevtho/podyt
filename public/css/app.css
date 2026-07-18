@@ -1139,6 +1139,10 @@ select {
   --tw-bg-opacity: 1;
   background-color: rgb(220 252 231 / var(--tw-bg-opacity));
 }
+.bg-yellow-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 249 195 / var(--tw-bg-opacity));
+}
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1399,6 +1403,10 @@ select {
 .text-red-800 {
   --tw-text-opacity: 1;
   color: rgb(152 0 0 / var(--tw-text-opacity));
+}
+.text-yellow-800 {
+  --tw-text-opacity: 1;
+  color: rgb(133 77 14 / var(--tw-text-opacity));
 }
 .text-primary-800 {
   --tw-text-opacity: 1;

@@ -12,7 +12,20 @@ trait HasSlug
     public static function bootHasSlug()
     {
         static::saving(function ($model) {
-            $model->slug = Str::slug($model->{$model->slugSource});
+            $baseSlug = Str::slug($model->{$model->slugSource});
+            $slug = $baseSlug;
+            $suffix = 2;
+
+            while (
+                $model::where('slug', $slug)
+                    ->when($model->exists, fn ($query) => $query->whereKeyNot($model->getKey()))
+                    ->exists()
+            ) {
+                $slug = "{$baseSlug}-{$suffix}";
+                $suffix++;
+            }
+
+            $model->slug = $slug;
         });
     }
 }

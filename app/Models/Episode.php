@@ -62,6 +62,10 @@ class Episode extends Model
         'created' => EpisodeAdded::class
     ];
 
+    protected $appends = [
+        'is_retryable',
+    ];
+
     protected $slugSource = 'title';
 
     public static bool $updatedDataFromYoutube = true;
@@ -78,6 +82,24 @@ class Episode extends Model
             && $this->mp3_location_type === 'path'
             && !empty($this->mp3_location)
             && Storage::disk('download')->exists($this->mp3_location);
+    }
+
+    public function isFileMissing(): bool
+    {
+        return $this->mp3_location_type === 'path'
+            && (empty($this->mp3_location) || !Storage::disk('download')->exists($this->mp3_location));
+    }
+
+    public function isStuckProcessing(): bool
+    {
+        return $this->status === 'processing'
+            && $this->updated_at !== null
+            && $this->updated_at->lt(now()->subDays(config('youtube.processing-stuck-days')));
+    }
+
+    public function getIsRetryableAttribute(): bool
+    {
+        return in_array($this->status, ['failed', 'expired'], true) || $this->isStuckProcessing();
     }
 
     public function episodeFileUrl()

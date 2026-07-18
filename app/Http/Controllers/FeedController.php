@@ -76,7 +76,13 @@ class FeedController extends Controller
     {
         $feed->load(['sources', 'episodes' => fn($query) => $query->orderBy('created_At', 'desc')]);
 
-        $feed->episodes->each(fn(Episode $e) => $e->download_url = $e->episodeFileUrl());
+        $feed->episodes->each(function (Episode $e) {
+            if ($e->status === 'published' && $e->isFileMissing()) {
+                $e->update(['status' => 'expired']);
+            }
+
+            $e->download_url = $e->episodeFileUrl();
+        });
 
         return Inertia(
             'Feed/Show',

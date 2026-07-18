@@ -4278,9 +4278,9 @@ function Show(_ref) {
                   }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)("div", {
                     className: "ml-2 flex-shrink-0 flex",
                     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("p", {
-                      className: (0,_Helpers_classNames__WEBPACK_IMPORTED_MODULE_4__["default"])(episode.status === "published" ? "bg-green-100 text-green-800" : "", episode.status === "failed" ? "bg-red-100 text-red-800" : "", ["published", "failed"].indexOf(episode.status) === -1 ? "bg-primary-100 text-primary-800" : "", "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"),
+                      className: (0,_Helpers_classNames__WEBPACK_IMPORTED_MODULE_4__["default"])(episode.status === "published" ? "bg-green-100 text-green-800" : "", episode.status === "failed" ? "bg-red-100 text-red-800" : "", episode.status === "expired" ? "bg-yellow-100 text-yellow-800" : "", ["published", "failed", "expired"].indexOf(episode.status) === -1 ? "bg-primary-100 text-primary-800" : "", "px-2 inline-flex text-xs leading-5 font-semibold rounded-full"),
                       children: episode.status
-                    }), episode.status === "failed" && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
+                    }), episode.is_retryable && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_inertiajs_inertia_react__WEBPACK_IMPORTED_MODULE_1__.Link, {
                       as: "button",
                       type: "button",
                       method: "post",
@@ -4292,7 +4292,7 @@ function Show(_ref) {
                       preserveState: true,
                       only: ["feed"],
                       title: "Retry download",
-                      className: "ml-1 text-red-800 hover:opacity-75 focus:opacity-75",
+                      className: "ml-1 text-primary-600 hover:opacity-75 focus:opacity-75",
                       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_heroicons_react_outline__WEBPACK_IMPORTED_MODULE_7__["default"], {
                         className: "h-4 w-4"
                       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("span", {

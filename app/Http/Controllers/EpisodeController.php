@@ -102,7 +102,7 @@ class EpisodeController extends Controller
      */
     public function retry(Request $request, Feed $feed, Episode $episode)
     {
-        abort_unless($episode->status === 'failed', 409, 'Episode is not in a failed state.');
+        abort_unless($episode->is_retryable, 409, 'Episode is not in a retryable state.');
 
         $episode->update([
             'status' => Episode::STATUS_PENDING,

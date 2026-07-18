@@ -21,4 +21,6 @@ return [
     'remote-download-timeout' => env('YOUTUBE_REMOTE_DOWNLOAD_TIMEOUT', '3 days'),
 
     'remote-worker-stale-claim-minutes' => env('YOUTUBE_REMOTE_WORKER_STALE_CLAIM_MINUTES', 30),
+
+    'processing-stuck-days' => env('YOUTUBE_PROCESSING_STUCK_DAYS', 3),
 ];
